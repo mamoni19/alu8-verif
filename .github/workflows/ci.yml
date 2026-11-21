@@ -1,0 +1,37 @@
+name: ALU verification
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Icarus Verilog
+        run: sudo apt-get update && sudo apt-get install -y iverilog
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Full pipeline (3 seeds, exhaustive, mutation testing)
+        run: python tb/run_all.py --mutation
+
+      - name: Upload report and artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: alu-verification-report
+          path: |
+            sim/report.html
+            sim/mutation_report.md
+            sim/mutation_results.json
+            sim/runs/**/results.xml
+            sim/runs/**/coverage.yml
