@@ -1,5 +1,7 @@
 # 8-bit ALU Verification Framework (Verilog + Python)
 
+[![ALU verification](https://github.com/mamoni19/alu8-verif/actions/workflows/ci.yml/badge.svg)](https://github.com/mamoni19/alu8-verif/actions/workflows/ci.yml)
+
 A self-checking verification environment for a combinational 8-bit ALU. The DUT is written in
 Verilog, and checked against an independent Python golden model with **cocotb** and Icarus Verilog.
 It includes functional coverage, seeded random testing, mutation testing and CI.
